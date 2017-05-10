@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         //Prepare the player with the source.
         mSimpleExoPlayer.prepare(videoSource);
         //添加监听的listener
-        mSimpleExoPlayer.setVideoListener(mVideoListener);
+//        mSimpleExoPlayer.setVideoListener(mVideoListener);
         mSimpleExoPlayer.addListener(eventListener);
 //        mSimpleExoPlayer.setTextOutput(mOutput);
         mSimpleExoPlayer.setPlayWhenReady(true);

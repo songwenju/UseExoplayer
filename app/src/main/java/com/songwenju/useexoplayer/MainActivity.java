@@ -1,5 +1,6 @@
 package com.songwenju.useexoplayer;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +44,10 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private SimpleExoPlayerView mExoPlayerView;
     private SimpleExoPlayer mSimpleExoPlayer;
+    private Context mContext;
 //    Uri playerUri = Uri.parse("https://storage.googleapis.com/android-tv/Sample%20videos/Demo%20Slam/Google%20Demo%20Slam_%20Hangin'%20with%20the%20Google%20Search%20Bar.mp4");
     Uri playerUri = Uri.parse("https://sdvideos.s3.cn-north-1.amazonaws.com.cn/allnew2/%E6%9D%8E%E5%A2%9E%E7%83%88%2B%E6%85%A2%E6%80%A7%E8%85%B9%E6%B3%BB%E4%B8%8E%E2%80%9C%E7%BB%93%E8%82%A0%E7%82%8E.mp4");
+
     private ProgressBar mProgressBar;
 
     @Override
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        mContext = this;
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         initPlayer();
         playVideo();
@@ -88,14 +92,16 @@ public class MainActivity extends AppCompatActivity {
                 Util.getUserAgent(MainActivity.this,"useExoplayer"),bandwidthMeter);
         // 生成用于解析媒体数据的Extractor实例。
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+
+
         // MediaSource代表要播放的媒体。
         MediaSource videoSource = new ExtractorMediaSource(playerUri,dataSourceFactory,extractorsFactory,
                 null,null);
         //Prepare the player with the source.
         mSimpleExoPlayer.prepare(videoSource);
         //添加监听的listener
+        mSimpleExoPlayer.setVideoListener(mVideoListener);
         mSimpleExoPlayer.addListener(eventListener);
-//        mSimpleExoPlayer.setVideoListener(mVideoListener);
 //        mSimpleExoPlayer.setTextOutput(mOutput);
         mSimpleExoPlayer.setPlayWhenReady(true);
 
